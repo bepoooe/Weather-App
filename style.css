@@ -6,9 +6,17 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #74b9ff, #0984e3, #6c5ce7);
+    background: linear-gradient(135deg, #1e3c72, #2a5298, #16a085, #27ae60);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
     min-height: 100vh;
     padding: 20px;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 .container {
@@ -18,11 +26,12 @@ body {
 }
 
 .weather-app {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
+    background: rgba(20, 30, 48, 0.95);
+    border-radius: 25px;
+    padding: 40px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(22, 160, 133, 0.3);
 }
 
 header {
@@ -31,20 +40,26 @@ header {
 }
 
 header h1 {
-    color: #2d3436;
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    font-weight: 700;
+    background: linear-gradient(135deg, #16a085, #27ae60, #2ecc71);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 3rem;
+    margin-bottom: 15px;
+    font-weight: 800;
+    text-align: center;
 }
 
 header h1 i {
-    color: #fdcb6e;
-    margin-right: 10px;
+    color: #f39c12;
+    margin-right: 15px;
+    filter: drop-shadow(0 0 10px rgba(243, 156, 18, 0.5));
 }
 
 header p {
-    color: #636e72;
-    font-size: 1.1rem;
+    color: #bdc3c7;
+    font-size: 1.2rem;
+    font-weight: 300;
 }
 
 .search-container {
@@ -54,23 +69,26 @@ header p {
 .search-box {
     display: flex;
     align-items: center;
-    background: white;
+    background: rgba(22, 160, 133, 0.1);
     border-radius: 50px;
-    padding: 15px 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    border: 2px solid #e9ecef;
+    padding: 18px 25px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    border: 2px solid rgba(22, 160, 133, 0.3);
     transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
 }
 
 .search-box:focus-within {
-    border-color: #74b9ff;
-    box-shadow: 0 10px 30px rgba(116, 185, 255, 0.2);
+    border-color: #16a085;
+    box-shadow: 0 15px 35px rgba(22, 160, 133, 0.4);
+    background: rgba(22, 160, 133, 0.15);
 }
 
 .search-box i {
-    color: #74b9ff;
+    color: #16a085;
     margin-right: 15px;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    filter: drop-shadow(0 0 5px rgba(22, 160, 133, 0.5));
 }
 
 #locationInput {
@@ -78,30 +96,33 @@ header p {
     border: none;
     outline: none;
     font-size: 1.1rem;
-    color: #2d3436;
+    color: #ecf0f1;
     background: transparent;
+    font-weight: 300;
 }
 
 #locationInput::placeholder {
-    color: #b2bec3;
+    color: #95a5a6;
+    font-weight: 300;
 }
 
 #searchBtn {
-    background: linear-gradient(135deg, #74b9ff, #0984e3);
+    background: linear-gradient(135deg, #16a085, #27ae60);
     color: white;
     border: none;
-    padding: 12px 25px;
+    padding: 14px 30px;
     border-radius: 25px;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-left: 10px;
+    box-shadow: 0 8px 20px rgba(22, 160, 133, 0.3);
 }
 
 #searchBtn:hover {
+    background: linear-gradient(135deg, #27ae60, #2ecc71);
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(116, 185, 255, 0.3);
+    box-shadow: 0 12px 25px rgba(22, 160, 133, 0.4);
 }
 
 .location-buttons {
@@ -111,10 +132,10 @@ header p {
 }
 
 .current-location-btn {
-    background: linear-gradient(135deg, #00b894, #00a085);
+    background: linear-gradient(135deg, #16a085, #1abc9c);
     color: white;
     border: none;
-    padding: 12px 25px;
+    padding: 14px 30px;
     border-radius: 25px;
     font-size: 1rem;
     font-weight: 600;
@@ -122,20 +143,23 @@ header p {
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
-    gap: 8px;
-    box-shadow: 0 5px 15px rgba(0, 184, 148, 0.2);
+    gap: 10px;
+    box-shadow: 0 8px 20px rgba(22, 160, 133, 0.3);
+    border: 2px solid rgba(22, 160, 133, 0.3);
 }
 
 .current-location-btn:hover {
+    background: linear-gradient(135deg, #1abc9c, #2ecc71);
     transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(0, 184, 148, 0.3);
+    box-shadow: 0 12px 25px rgba(22, 160, 133, 0.4);
 }
 
 .current-location-btn:disabled {
-    background: #b2bec3;
+    background: rgba(149, 165, 166, 0.5);
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
+    border-color: rgba(149, 165, 166, 0.3);
 }
 
 .current-location-btn i {
@@ -145,13 +169,14 @@ header p {
 .loading {
     text-align: center;
     padding: 40px;
-    color: #74b9ff;
+    color: #16a085;
 }
 
 .loading i {
     font-size: 3rem;
     margin-bottom: 15px;
     animation: spin 1s linear infinite;
+    filter: drop-shadow(0 0 10px rgba(22, 160, 133, 0.5));
 }
 
 @keyframes spin {
@@ -203,19 +228,21 @@ header p {
     text-align: center;
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 2px solid #e9ecef;
+    border-bottom: 2px solid rgba(22, 160, 133, 0.3);
 }
 
 .location-info h2 {
-    color: #2d3436;
-    font-size: 2rem;
-    margin-bottom: 5px;
+    color: #ecf0f1;
+    font-size: 2.2rem;
+    margin-bottom: 8px;
     font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .location-info p {
-    color: #636e72;
+    color: #bdc3c7;
     font-size: 1.1rem;
+    font-weight: 300;
 }
 
 .current-weather {
@@ -242,26 +269,32 @@ header p {
 }
 
 .temperature {
-    font-size: 4rem;
-    font-weight: 700;
-    color: #2d3436;
+    font-size: 4.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #16a085, #27ae60, #2ecc71);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .temp-unit {
     font-size: 2rem;
-    color: #636e72;
+    color: #95a5a6;
 }
 
 .weather-description h3 {
-    color: #2d3436;
+    color: #ecf0f1;
     font-size: 1.8rem;
     margin-bottom: 10px;
     font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .weather-description p {
-    color: #636e72;
+    color: #bdc3c7;
     font-size: 1.2rem;
+    font-weight: 300;
 }
 
 .weather-details {
@@ -274,40 +307,46 @@ header p {
 .detail-item {
     display: flex;
     align-items: center;
-    padding: 20px;
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e9ecef;
-    transition: transform 0.2s ease;
+    padding: 25px;
+    background: rgba(22, 160, 133, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(22, 160, 133, 0.3);
+    transition: transform 0.3s ease;
+    backdrop-filter: blur(10px);
 }
 
 .detail-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(22, 160, 133, 0.2);
+    background: rgba(22, 160, 133, 0.15);
 }
 
 .detail-item i {
-    font-size: 1.5rem;
-    color: #74b9ff;
-    margin-right: 15px;
-    width: 30px;
+    font-size: 1.8rem;
+    color: #16a085;
+    margin-right: 20px;
+    width: 35px;
     text-align: center;
+    filter: drop-shadow(0 0 5px rgba(22, 160, 133, 0.5));
 }
 
 .detail-item .label {
     display: block;
-    color: #636e72;
-    font-size: 0.9rem;
-    margin-bottom: 5px;
+    color: #95a5a6;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .detail-item .value {
     display: block;
-    color: #2d3436;
-    font-size: 1.2rem;
-    font-weight: 600;
+    color: #ecf0f1;
+    font-size: 1.3rem;
+    font-weight: 700;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 /* Responsive Design */
