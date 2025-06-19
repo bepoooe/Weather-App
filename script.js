@@ -2,6 +2,11 @@
 const API_KEY = 'ea048e63dfc34185b6270054251906';
 const API_BASE_URL = 'https://api.weatherapi.com/v1';
 
+// Debug info
+console.log('Weather App loaded on:', window.location.hostname);
+console.log('Protocol:', window.location.protocol);
+console.log('Full URL:', window.location.href);
+
 // DOM elements
 const locationInput = document.getElementById('locationInput');
 const searchBtn = document.getElementById('searchBtn');
@@ -33,8 +38,10 @@ let isSearching = false;
 async function testConnection() {
     try {
         console.log('Testing API connection...');
+        console.log('Domain:', window.location.hostname);
         console.log('API_KEY:', API_KEY ? 'Set' : 'Not set');
         console.log('API_BASE_URL:', API_BASE_URL);
+        console.log('User Agent:', navigator.userAgent);
         
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 5000);
@@ -44,12 +51,17 @@ async function testConnection() {
         
         const response = await fetch(testUrl, {
             signal: controller.signal,
-            headers: { 'Accept': 'application/json' }
+            headers: { 
+                'Accept': 'application/json',
+                'Origin': window.location.origin,
+                'Referer': window.location.href
+            }
         });
         
         clearTimeout(timeoutId);
         console.log('Test response status:', response.status);
         console.log('Test response ok:', response.ok);
+        console.log('Response headers:', [...response.headers.entries()]);
         
         if (!response.ok) {
             const errorText = await response.text();
@@ -59,6 +71,11 @@ async function testConnection() {
         return response.ok;
     } catch (error) {
         console.error('Connection test failed:', error);
+        console.error('Error details:', {
+            name: error.name,
+            message: error.message,
+            stack: error.stack
+        });
         return false;
     }
 }
