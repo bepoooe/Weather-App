@@ -349,6 +349,49 @@ header p {
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
+/* Footer Styling */
+.app-footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid rgba(22, 160, 133, 0.3);
+}
+
+.app-footer p {
+    color: #95a5a6;
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin: 0;
+}
+
+.app-footer a {
+    color: #16a085;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.app-footer a:hover {
+    color: #2ecc71;
+    text-shadow: 0 0 8px rgba(22, 160, 133, 0.5);
+}
+
+.app-footer a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(135deg, #16a085, #2ecc71);
+    transition: width 0.3s ease;
+}
+
+.app-footer a:hover::after {
+    width: 100%;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     body {
@@ -458,31 +501,14 @@ header p {
     .location-info p {
         font-size: 1rem;
     }
-}
-
-/* Touch-friendly improvements */
-@media (hover: none) and (pointer: coarse) {
-    .search-box:focus-within {
-        transform: scale(1.02);
+    
+    .app-footer {
+        margin-top: 30px;
+        padding: 18px 0;
     }
     
-    button:active {
-        transform: scale(0.98);
-    }
-    
-    .detail-item:active {
-        transform: scale(0.98);
-    }
-}
-
-/* Improve text readability on smaller screens */
-@media (max-width: 768px) {
-    * {
-        -webkit-tap-highlight-color: rgba(22, 160, 133, 0.3);
-    }
-    
-    input, button {
-        font-size: 16px; /* Prevents zoom on iOS */
+    .app-footer p {
+        font-size: 0.85rem;
     }
 }
 
@@ -540,6 +566,16 @@ header p {
     .weather-description p {
         font-size: 1rem;
     }
+    
+    .app-footer {
+        margin-top: 25px;
+        padding: 15px 0;
+    }
+    
+    .app-footer p {
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
 }
 
 @media (max-width: 360px) {
@@ -562,5 +598,15 @@ header p {
     #searchBtn, .current-location-btn {
         padding: 14px;
         font-size: 0.95rem;
+    }
+    
+    .app-footer {
+        margin-top: 20px;
+        padding: 12px 0;
+    }
+    
+    .app-footer p {
+        font-size: 0.75rem;
+        line-height: 1.5;
     }
 }
