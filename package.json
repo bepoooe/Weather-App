@@ -1,0 +1,14 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "A simple weather application",
+  "main": "index.html",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js && npx serve .",
+    "start": "npx serve ."
+  },
+  "keywords": ["weather", "api", "javascript"],
+  "author": "Your Name",
+  "license": "MIT"
+}

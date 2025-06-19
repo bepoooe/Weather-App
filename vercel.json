@@ -1,0 +1,12 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".",
+  "env": {
+    "WEATHER_API_KEY": "@weather-api-key"
+  },
+  "build": {
+    "env": {
+      "WEATHER_API_KEY": "@weather-api-key"
+    }
+  }
+}

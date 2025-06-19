@@ -1,5 +1,5 @@
 // Weather API configuration
-const API_KEY = 'ea048e63dfc34185b6270054251906';
+const API_KEY = window.WEATHER_CONFIG?.API_KEY || 'ea048e63dfc34185b6270054251906';
 const API_BASE_URL = 'http://api.weatherapi.com/v1';
 
 // DOM elements
