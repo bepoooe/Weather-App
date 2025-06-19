@@ -25,11 +25,5 @@
         }
       ]
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/debug",
-      "destination": "/debug.html"
-    }
   ]
 }
