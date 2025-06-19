@@ -1,6 +1,6 @@
 // Weather API configuration
 const API_KEY = window.WEATHER_CONFIG?.API_KEY || 'ea048e63dfc34185b6270054251906';
-const API_BASE_URL = 'http://api.weatherapi.com/v1';
+const API_BASE_URL = 'https://api.weatherapi.com/v1';
 
 // DOM elements
 const locationInput = document.getElementById('locationInput');
@@ -115,16 +115,26 @@ async function getWeatherData(location) {
         }
         
         displayWeatherData(data);
-        
-    } catch (error) {
+          } catch (error) {
         console.error('Error fetching weather data:', error);
         
         if (error.message.includes('No matching location found')) {
             showError('Location not found. Please check the spelling and try again.');
         } else if (error.message.includes('API key')) {
             showError('API key error. Please check your API configuration.');
-        } else if (error.message.includes('network') || error.message.includes('fetch')) {
-            showError('Network error. Please check your internet connection.');
+        } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
+            showError('Network error. Please check your internet connection and try again.');
+        } else if (error.message.includes('CORS') || error.message.includes('Mixed Content')) {
+            showError('Security error. The app may need to be accessed over HTTPS.');
+        } else if (error.message.includes('HTTP error! status:')) {
+            const status = error.message.match(/status: (\d+)/)?.[1];
+            if (status === '403') {
+                showError('API access denied. Please check your API key.');
+            } else if (status === '404') {
+                showError('Weather service not found. Please try again later.');
+            } else {
+                showError(`Server error (${status}). Please try again later.`);
+            }
         } else {
             showError('Unable to fetch weather data. Please try again later.');
         }
