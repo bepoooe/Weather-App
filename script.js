@@ -1,5 +1,5 @@
 // Weather API configuration
-const API_KEY = window.WEATHER_CONFIG?.API_KEY || 'ea048e63dfc34185b6270054251906';
+const API_KEY = 'ea048e63dfc34185b6270054251906';
 const API_BASE_URL = 'https://api.weatherapi.com/v1';
 
 // DOM elements
@@ -32,18 +32,33 @@ let isSearching = false;
 // Test API connection
 async function testConnection() {
     try {
+        console.log('Testing API connection...');
+        console.log('API_KEY:', API_KEY ? 'Set' : 'Not set');
+        console.log('API_BASE_URL:', API_BASE_URL);
+        
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 5000);
         
-        const response = await fetch(`${API_BASE_URL}/current.json?key=${API_KEY}&q=London&aqi=no`, {
+        const testUrl = `${API_BASE_URL}/current.json?key=${API_KEY}&q=London&aqi=no`;
+        console.log('Test URL:', testUrl);
+        
+        const response = await fetch(testUrl, {
             signal: controller.signal,
             headers: { 'Accept': 'application/json' }
         });
         
         clearTimeout(timeoutId);
+        console.log('Test response status:', response.status);
+        console.log('Test response ok:', response.ok);
+        
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('API test error response:', errorText);
+        }
+        
         return response.ok;
     } catch (error) {
-        console.warn('Connection test failed:', error);
+        console.error('Connection test failed:', error);
         return false;
     }
 }
@@ -141,25 +156,28 @@ async function getWeatherData(location, retryCount = 0) {
     const maxRetries = 2;
     showLoading();
     
-    try {
-        // Create AbortController for timeout
+    try {        // Create AbortController for timeout
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
         
-        const response = await fetch(
-            `${API_BASE_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(location)}&aqi=no`,
-            {
-                signal: controller.signal,
-                headers: {
-                    'Accept': 'application/json',
-                    'User-Agent': 'WeatherApp/1.0'
-                }
+        const requestUrl = `${API_BASE_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(location)}&aqi=no`;
+        console.log('Making request to:', requestUrl);
+        
+        const response = await fetch(requestUrl, {
+            signal: controller.signal,
+            headers: {
+                'Accept': 'application/json',
+                'User-Agent': 'WeatherApp/1.0'
             }
-        );
+        });
         
         clearTimeout(timeoutId);
+        console.log('Response status:', response.status);
+        console.log('Response ok:', response.ok);
         
         if (!response.ok) {
+            const errorText = await response.text();
+            console.error('API error response:', errorText);
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
