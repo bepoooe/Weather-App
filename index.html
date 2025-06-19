@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="weather-app">            <header>
+                <h1><i class="fas fa-cloud-sun"></i> Weather App</h1>
+                <p>Get current weather information for any location</p>
+            </header>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="locationInput" placeholder="Enter city name or location...">
+                    <button id="searchBtn">Search</button>
+                </div>                <div class="location-buttons">
+                    <button id="currentLocationBtn" class="current-location-btn">
+                        <i class="fas fa-location-arrow"></i>
+                        Use Current Location
+                    </button>
+                </div>
+            </div>
+
+            <div class="loading" id="loading" style="display: none;">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading weather data...</p>
+            </div>
+
+            <div class="error-message" id="errorMessage" style="display: none;">
+                <i class="fas fa-exclamation-triangle"></i>
+                <p id="errorText"></p>
+            </div>
+
+            <div class="weather-display" id="weatherDisplay" style="display: none;">
+                <div class="location-info">
+                    <h2 id="locationName"></h2>
+                    <p id="localTime"></p>
+                </div>
+
+                <div class="current-weather">
+                    <div class="temperature-section">
+                        <img id="weatherIcon" src="" alt="Weather Icon">
+                        <div class="temperature">
+                            <span id="currentTemp"></span>
+                            <span class="temp-unit">°C</span>
+                        </div>
+                    </div>
+                    
+                    <div class="weather-description">
+                        <h3 id="weatherCondition"></h3>
+                        <p>Feels like <span id="feelsLike"></span>°C</p>
+                    </div>
+                </div>
+
+                <div class="weather-details">
+                    <div class="detail-item">
+                        <i class="fas fa-eye"></i>
+                        <div>
+                            <span class="label">Visibility</span>
+                            <span class="value" id="visibility"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <i class="fas fa-tint"></i>
+                        <div>
+                            <span class="label">Humidity</span>
+                            <span class="value" id="humidity"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <i class="fas fa-wind"></i>
+                        <div>
+                            <span class="label">Wind Speed</span>
+                            <span class="value" id="windSpeed"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <i class="fas fa-thermometer-half"></i>
+                        <div>
+                            <span class="label">Pressure</span>
+                            <span class="value" id="pressure"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <i class="fas fa-cloud"></i>
+                        <div>
+                            <span class="label">Cloud Cover</span>
+                            <span class="value" id="cloudCover"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <i class="fas fa-sun"></i>
+                        <div>
+                            <span class="label">UV Index</span>
+                            <span class="value" id="uvIndex"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
