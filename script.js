@@ -25,6 +25,29 @@ const pressure = document.getElementById('pressure');
 const cloudCover = document.getElementById('cloudCover');
 const uvIndex = document.getElementById('uvIndex');
 
+// Debouncing and connection state
+let searchTimeout;
+let isSearching = false;
+
+// Test API connection
+async function testConnection() {
+    try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 5000);
+        
+        const response = await fetch(`${API_BASE_URL}/current.json?key=${API_KEY}&q=London&aqi=no`, {
+            signal: controller.signal,
+            headers: { 'Accept': 'application/json' }
+        });
+        
+        clearTimeout(timeoutId);
+        return response.ok;
+    } catch (error) {
+        console.warn('Connection test failed:', error);
+        return false;
+    }
+}
+
 // Event listeners
 searchBtn.addEventListener('click', handleSearch);
 currentLocationBtn.addEventListener('click', handleCurrentLocation);
@@ -34,7 +57,7 @@ locationInput.addEventListener('keypress', (e) => {
     }
 });
 
-// Search handler
+// Search handler with debouncing
 async function handleSearch() {
     const location = locationInput.value.trim();
     
@@ -43,7 +66,25 @@ async function handleSearch() {
         return;
     }
     
-    await getWeatherData(location);
+    // Prevent multiple simultaneous searches
+    if (isSearching) {
+        return;
+    }
+    
+    // Clear any pending searches
+    if (searchTimeout) {
+        clearTimeout(searchTimeout);
+    }
+    
+    // Debounce search requests
+    searchTimeout = setTimeout(async () => {
+        isSearching = true;
+        try {
+            await getWeatherData(location);
+        } finally {
+            isSearching = false;
+        }
+    }, 300);
 }
 
 // Current location handler
@@ -95,14 +136,28 @@ function getCurrentPosition() {
     });
 }
 
-// Fetch weather data from API
-async function getWeatherData(location) {
+// Fetch weather data from API with retry logic
+async function getWeatherData(location, retryCount = 0) {
+    const maxRetries = 2;
     showLoading();
     
     try {
+        // Create AbortController for timeout
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+        
         const response = await fetch(
-            `${API_BASE_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(location)}&aqi=no`
+            `${API_BASE_URL}/current.json?key=${API_KEY}&q=${encodeURIComponent(location)}&aqi=no`,
+            {
+                signal: controller.signal,
+                headers: {
+                    'Accept': 'application/json',
+                    'User-Agent': 'WeatherApp/1.0'
+                }
+            }
         );
+        
+        clearTimeout(timeoutId);
         
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -115,10 +170,21 @@ async function getWeatherData(location) {
         }
         
         displayWeatherData(data);
-          } catch (error) {
+        
+    } catch (error) {
         console.error('Error fetching weather data:', error);
         
-        if (error.message.includes('No matching location found')) {
+        // Retry logic for network errors
+        if ((error.name === 'AbortError' || error.name === 'TypeError' || error.message.includes('fetch')) && retryCount < maxRetries) {
+            console.log(`Retrying request... Attempt ${retryCount + 1} of ${maxRetries}`);
+            setTimeout(() => getWeatherData(location, retryCount + 1), 1000 * (retryCount + 1));
+            return;
+        }
+        
+        // Error handling
+        if (error.name === 'AbortError') {
+            showError('Request timed out. Please check your connection and try again.');
+        } else if (error.message.includes('No matching location found')) {
             showError('Location not found. Please check the spelling and try again.');
         } else if (error.message.includes('API key')) {
             showError('API key error. Please check your API configuration.');
@@ -132,6 +198,10 @@ async function getWeatherData(location) {
                 showError('API access denied. Please check your API key.');
             } else if (status === '404') {
                 showError('Weather service not found. Please try again later.');
+            } else if (status === '429') {
+                showError('Too many requests. Please wait a moment and try again.');
+            } else if (status === '500' || status === '502' || status === '503') {
+                showError('Weather service is temporarily unavailable. Please try again later.');
             } else {
                 showError(`Server error (${status}). Please try again later.`);
             }
@@ -201,6 +271,10 @@ function showError(message) {
     errorMessage.style.display = 'block';
 }
 
+function hideError() {
+    errorMessage.style.display = 'none';
+}
+
 function showWeatherDisplay() {
     hideAllDisplays();
     weatherDisplay.style.display = 'block';
@@ -213,17 +287,40 @@ function hideAllDisplays() {
 }
 
 // Initialize app
-document.addEventListener('DOMContentLoaded', () => {
-    // Focus on input field when page loads
-    locationInput.focus();
-    
-    // Check if geolocation is available and update button state
-    if (!navigator.geolocation) {
-        currentLocationBtn.disabled = true;
-        currentLocationBtn.innerHTML = '<i class="fas fa-location-slash"></i> Location Not Available';
-        currentLocationBtn.title = 'Geolocation is not supported by this browser';
+async function initializeApp() {
+    try {
+        // Test connection on load
+        const isConnected = await testConnection();
+        if (!isConnected) {
+            console.warn('Initial connection test failed');
+        }
+        
+        // Add online/offline listeners
+        window.addEventListener('online', () => {
+            console.log('Connection restored');
+            hideError();
+        });
+        
+        window.addEventListener('offline', () => {
+            showError('No internet connection. Please check your network.');
+        });
+        
+        // Check if we're offline
+        if (!navigator.onLine) {
+            showError('No internet connection. Please check your network.');
+        }
+        
+    } catch (error) {
+        console.error('App initialization error:', error);
     }
-});
+}
+
+// Initialize when DOM is loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+    initializeApp();
+}
 
 // Handle API rate limiting
 let lastRequestTime = 0;
