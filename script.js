@@ -307,10 +307,12 @@ function hideAllDisplays() {
 // Initialize app
 async function initializeApp() {
     try {
-        // Test connection on load
+        // Test connection on load (but don't show error if it fails)
         const isConnected = await testConnection();
         if (!isConnected) {
-            console.warn('Initial connection test failed');
+            console.warn('Initial connection test failed - but will try again on search');
+        } else {
+            console.log('Initial connection test successful');
         }
         
         // Add online/offline listeners
@@ -323,13 +325,14 @@ async function initializeApp() {
             showError('No internet connection. Please check your network.');
         });
         
-        // Check if we're offline
+        // Only show offline error if we're definitely offline
         if (!navigator.onLine) {
             showError('No internet connection. Please check your network.');
         }
         
     } catch (error) {
         console.error('App initialization error:', error);
+        // Don't show error to user during initialization
     }
 }
 
