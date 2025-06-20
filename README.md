@@ -1,7 +1,5 @@
 # 🌤️ Weather App
 
-**🔗 Live Demo:** [https://weather-app-alpha-two-17.vercel.app/](https://weather-app-alpha-two-17.vercel.app/)
-
 A modern, responsive weather application built for **Pinnacle Labs Internship** that provides real-time weather information for any location using the WeatherAPI service.
 
 ## 🎯 Project Overview
