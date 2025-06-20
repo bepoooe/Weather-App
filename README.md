@@ -43,14 +43,6 @@ This Weather App was developed as part of my internship application for **Pinnac
 
 ## 📖 How to Use
 
-### 🌐 Online Access
-1. **Visit the live application**: [Weather App](https://weather-app-xt-black-30.vercel.app)
-2. **Search for weather**: 
-   - Type any city name, address, or location in the search box
-   - Press Enter or click the "Search" button
-3. **Use geolocation**: Click "Use Current Location" for instant local weather
-4. **View detailed information**: Explore comprehensive weather data with modern UI
-
 ### 💻 Local Development
 ```bash
 # Clone the repository
@@ -85,22 +77,6 @@ Weather-App/
 └── README.md             # Project documentation
 ```
 
-## 🎨 Design Highlights
-
-### Modern UI/UX Features
-- **Glass Morphism Design**: Translucent cards with backdrop blur effects
-- **Animated Gradients**: Dynamic teal-to-green color schemes  
-- **Responsive Layout**: Mobile-first design with CSS Grid and Flexbox
-- **Interactive Elements**: Smooth hover animations and touch-friendly interactions
-- **Typography**: Modern font hierarchy with gradient text effects
-- **Dark Theme**: Professional dark interface with bright accent colors
-
-### Mobile Optimization
-- **Touch-friendly interfaces** with appropriate tap targets
-- **Responsive breakpoints** for all device sizes (360px to desktop)
-- **Fast loading** with optimized assets and efficient code
-- **iOS/Android compatibility** with proper viewport settings
-
 ## 🔧 Technical Implementation
 
 ### Key Features Implemented
@@ -118,13 +94,6 @@ Weather-App/
 - **Performance optimization** with efficient DOM manipulation
 - **Cross-browser compatibility** tested on major browsers
 
-## 🚀 Deployment & Performance
-
-**Platform**: Vercel (Serverless deployment)  
-**Live URL**: [weather-app-alpha-two-17.vercel.app](https://weather-app-alpha-two-17.vercel.app/)  
-**Performance**: Global CDN with edge caching  
-**SSL**: Automatic HTTPS with security headers
-
 ## 👨‍💻 Developer Information
 
 **Created by**: bepoooe  
@@ -132,18 +101,6 @@ Weather-App/
 **Repository**: [GitHub - Weather App](https://github.com/bepoooe/Weather-App)  
 **Skills Demonstrated**: Frontend Development, API Integration, Responsive Design, Modern Web Technologies
 
-## 📋 Future Enhancements
-
-- 📅 **Extended Forecast**: 7-day weather predictions with hourly breakdowns
-- 🗺️ **Interactive Maps**: Weather radar and satellite imagery integration  
-- 🔔 **Smart Notifications**: Weather alerts and severe weather warnings
-- 📊 **Analytics Dashboard**: Historical data and weather trends
-- 🌐 **Internationalization**: Multi-language support for global accessibility
-- ⭐ **Favorites System**: Save and quickly access preferred locations
-
 ---
 
 *This project demonstrates proficiency in modern web development technologies and best practices, showcasing skills essential for frontend development roles at **Pinnacle Labs**.*
-
-- **v1.0**: Initial release with basic weather display
-- Current version includes geolocation, service worker, and comprehensive error handling
